@@ -1,7 +1,7 @@
-package com.zazhi.shiro_demo.shiro;
+package com.zazhi.shiro_jwt.shiro;
 
-import com.zazhi.shiro_demo.common.JwtUtil;
-import com.zazhi.shiro_demo.service.UserService;
+import com.zazhi.shiro_jwt.common.JwtUtil;
+import com.zazhi.shiro_jwt.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -65,7 +65,8 @@ public class AccountRealm extends AuthorizingRealm {
         String username = (String)map.get("username");
 
         // TODO：这里可以根据业务逻辑自定义验证逻辑
-        // 例如:1.根据用户名查询数据库，判断用户是否存在 2.判断用户状态是否被锁定等
+        // 例如：1.根据用户名查询数据库，判断用户是否存在
+        //      2.判断用户状态是否被锁定等
 
         return new SimpleAuthenticationInfo(username, jwtToken, getName());
     }

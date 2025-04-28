@@ -1,4 +1,4 @@
-package com.zazhi.shiro_demo.shiro;
+package com.zazhi.shiro_jwt.shiro;
 
 import jakarta.servlet.Filter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
@@ -18,9 +18,10 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager,
-                                                         ShiroFilterChainDefinition shiroFilterChainDefinition,
-                                                         JwtFilter jwtFilter) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(
+            DefaultWebSecurityManager securityManager,
+            ShiroFilterChainDefinition shiroFilterChainDefinition
+    ) {
         // ShiroFilterFactoryBean 用于配置 Shiro 的拦截器链，并与 SecurityManager 关联。
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -28,7 +29,7 @@ public class ShiroConfig {
         // 并将 JwtFilter 实例与之("jwt")关联。相当于给这个拦截器起了个名字
         // JwtFilter 负责处理所有请求的 JWT 认证。
         Map<String, Filter> filters = new HashMap<>();
-        filters.put("jwt", jwtFilter);
+        filters.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
         // setFilterChainDefinitionMap 用来定义 URL 路径与过滤器的映射关系。所有请求都会通过 jwt 过滤器进行身份验证。
@@ -57,15 +58,6 @@ public class ShiroConfig {
         defaultSubjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator);
         defaultWebSecurityManager.setSubjectDAO(defaultSubjectDAO);
         return defaultWebSecurityManager;
-    }
-
-    // 防止 Spring 将 JwtFilter 注册为全局过滤器
-    // 没有这个的话请求会被 JwtFilter 拦截两次
-    @Bean
-    public FilterRegistrationBean<Filter> registration(JwtFilter filter) {
-        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>(filter);
-        registration.setEnabled(false);
-        return registration;
     }
 
 }

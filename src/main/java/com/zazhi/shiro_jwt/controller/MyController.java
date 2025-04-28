@@ -1,7 +1,7 @@
-package com.zazhi.shiro_demo.controller;
+package com.zazhi.shiro_jwt.controller;
 
-import com.zazhi.shiro_demo.common.Result;
-import com.zazhi.shiro_demo.service.UserService;
+import com.zazhi.shiro_jwt.common.Result;
+import com.zazhi.shiro_jwt.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author zazhi
  * @date 2024/12/9
- * @description:
+ * @description: 模拟用户登录和权限控制的接口
  */
 @Slf4j
 @RestController()

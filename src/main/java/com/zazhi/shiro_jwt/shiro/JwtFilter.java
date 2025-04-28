@@ -1,4 +1,4 @@
-package com.zazhi.shiro_demo.shiro;
+package com.zazhi.shiro_jwt.shiro;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -14,7 +14,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Slf4j
-@Component
 public class JwtFilter extends AuthenticatingFilter {
 
     // 拦截请求之后，用于把令牌字符串封装成令牌对象

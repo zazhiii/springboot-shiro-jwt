@@ -1,6 +1,6 @@
-package com.zazhi.shiro_demo;
+package com.zazhi.shiro_jwt.handler;
 
-import com.zazhi.shiro_demo.common.Result;
+import com.zazhi.shiro_jwt.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
