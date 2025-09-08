@@ -69,6 +69,7 @@ public class AccountRealm extends AuthorizingRealm {
         // TODO：这里可以根据业务逻辑自定义验证逻辑
         // 例如：1.根据用户名查询数据库，判断用户是否存在
         //      2.判断用户状态是否被锁定等
+        // 若校验失败，抛出异常即可。
 
         return new SimpleAuthenticationInfo(username, jwtToken, getName());
     }
