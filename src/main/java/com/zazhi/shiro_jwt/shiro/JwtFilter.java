@@ -34,17 +34,20 @@ public class JwtFilter extends AuthenticatingFilter {
     // 如果返回 false，Shiro 会继续执行 onAccessDenied，进行认证或其他授权操作。
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        // 从请求头中获取 Token
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String jwtToken = httpRequest.getHeader("Authorization");
+        // 从请求头中创建 Token
+        AuthenticationToken token = createToken(request, response);
+//        HttpServletRequest httpRequest = (HttpServletRequest) request;
+//        String jwtToken = httpRequest.getHeader("Authorization");
 
-        if (StringUtils.hasLength(jwtToken)) { // 若当前请求存在 Token，则执行登录操作
+        // 若当前请求存在 Token，则执行登录操作
+        if (token != null) {
             try {
-                log.info("请求路径 {} 开始认证, token: {}", httpRequest.getRequestURI(), jwtToken);
-                getSubject(request, response).login(new JwtToken(jwtToken));
-                log.info("{} 认证成功", httpRequest.getRequestURI());
+                log.info("请求路径 {} 开始认证, token: {}", ((HttpServletRequest)request).getRequestURI(), token.getPrincipal());
+                getSubject(request, response).login(token);
+                log.info("{} 认证成功", ((HttpServletRequest)request).getRequestURI());
             } catch (AuthenticationException e) {
-                log.error("{} 认证失败", httpRequest.getRequestURI());
+                log.error("{} 认证失败", ((HttpServletRequest)request).getRequestURI(), e);
+                return false;
             }
         }
         // 若当前请求不存在 Token，没有认证意愿，直接放行
@@ -72,5 +75,4 @@ public class JwtFilter extends AuthenticatingFilter {
         }
         return super.preHandle(request, response);
     }
-
 }

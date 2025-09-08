@@ -2,6 +2,7 @@ package com.zazhi.shiro_jwt.shiro;
 
 import com.zazhi.shiro_jwt.common.JwtUtil;
 import com.zazhi.shiro_jwt.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -19,10 +20,9 @@ import java.util.Set;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AccountRealm extends AuthorizingRealm {
-
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     // 这个方法用于判断 AccountRealm 是否支持该类型的 Token。
     @Override
@@ -51,6 +51,8 @@ public class AccountRealm extends AuthorizingRealm {
     // 用于验证用户身份
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken){
+        log.info(">>> verify the jwt token");
+
         JwtToken token = (JwtToken)authenticationToken;
         String jwtToken = (String) token.getPrincipal();
 

@@ -16,6 +16,18 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+    // 创建 SecurityManager 对象，并设置自定义的 AccountRealm 作为认证器。
+    @Bean
+    public DefaultWebSecurityManager defaultWebSecurityManager(AccountRealm accountRealm) {
+        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(accountRealm);
+        // 关闭session
+        DefaultSubjectDAO defaultSubjectDAO = new DefaultSubjectDAO();
+        DefaultSessionStorageEvaluator sessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+        sessionStorageEvaluator.setSessionStorageEnabled(false);
+        defaultSubjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator);
+        defaultWebSecurityManager.setSubjectDAO(defaultSubjectDAO);
+        return defaultWebSecurityManager;
+    }
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(
@@ -46,19 +58,5 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/**", "jwt");
         return chainDefinition;
     }
-
-    // 创建 SecurityManager 对象，并设置自定义的 AccountRealm 作为认证器。
-    @Bean
-    public DefaultWebSecurityManager defaultWebSecurityManager(AccountRealm accountRealm) {
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(accountRealm);
-        // 关闭session
-        DefaultSubjectDAO defaultSubjectDAO = new DefaultSubjectDAO();
-        DefaultSessionStorageEvaluator sessionStorageEvaluator = new DefaultSessionStorageEvaluator();
-        sessionStorageEvaluator.setSessionStorageEnabled(false);
-        defaultSubjectDAO.setSessionStorageEvaluator(sessionStorageEvaluator);
-        defaultWebSecurityManager.setSubjectDAO(defaultSubjectDAO);
-        return defaultWebSecurityManager;
-    }
-
 }
 

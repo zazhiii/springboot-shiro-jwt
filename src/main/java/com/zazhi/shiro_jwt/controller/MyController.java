@@ -26,7 +26,7 @@ public class MyController {
     @Autowired
     UserService userService;
 
-    // 模拟登录
+    // 登录
     @GetMapping("/login")
     public String login(String username, String password) {
         return userService.login(username, password);
@@ -49,17 +49,18 @@ public class MyController {
     // 需要「认证」和「特定角色」才能访问
     @RequiresAuthentication
     @RequiresRoles("admin")
-    @GetMapping("/dashboard")
-    public Result<String> dashboard() {
-        log.info("调用 dashboard");
-        return Result.success("控制面板页面");
+    @GetMapping("/requireRole")
+    public Result<String> requireRole() {
+        log.info(">>> 调用需要 admin 角色的接口");
+        return Result.success("需要 admin 角色的页面");
     }
 
     // 需要「认证」和「特定权限」才能访问
     @RequiresAuthentication
     @RequiresPermissions("view:dashboard")
-    @GetMapping("/viewDashboard")
-    public Result<String> viewDashboard() {
-        return Result.success("查看控制面板页面");
+    @GetMapping("/requirePermission")
+    public Result<String> requirePermission() {
+        log.info(">>> 调用需要 view:dashboard 权限的接口");
+        return Result.success("需要 view:dashboard 权限的页面");
     }
 }

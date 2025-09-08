@@ -9,23 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zazhi</groupId>
-	<artifactId>springboot_shiro_jwt</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>shiro_demo</name>
-	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<artifactId>springboot-shiro-jwt</artifactId>
+	<version>1.0</version>
+	<name>shiro-jwt</name>
+	<description>shiro + jwt</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -50,7 +37,7 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring-boot-starter</artifactId>
 			<classifier>jakarta</classifier>
-			<version>2.0.1</version>
+			<version>2.0.5</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.shiro</groupId>
