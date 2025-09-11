@@ -1,6 +1,6 @@
-package com.zazhi.shiro_jwt.handler;
+package com.zazhi.handler;
 
-import com.zazhi.shiro_jwt.common.Result;
+import com.zazhi.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler{
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthenticatedException.class)
     public Result handleUnauthenticatedException(UnauthenticatedException e){
-        return Result.error("未认证或Token无效，请重新登录");
+        return Result.error(StringUtils.hasText(e.getMessage()) ? e.getMessage() : "认证失败");
     }
 
     /**

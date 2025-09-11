@@ -1,4 +1,4 @@
-package com.zazhi.shiro_jwt.common;
+package com.zazhi.common;
 
 import lombok.Data;
 
